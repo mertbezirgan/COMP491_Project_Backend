@@ -12,7 +12,8 @@
     "watch-node": "nodemon",
     "watch-ts": "tsc -w",
     "migration:generate": "ts-node ./node_modules/.bin/typeorm migration:generate",
-    "migration:run": "ts-node ./node_modules/.bin/typeorm migration:run"
+    "migration:run": "ts-node ./node_modules/.bin/typeorm migration:run",
+    "dev": "ts-node ./src/index.ts"
   },
   "keywords": [
     "typescript",

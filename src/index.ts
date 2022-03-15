@@ -3,7 +3,7 @@ import { createConnection } from 'typeorm';
 
 import logger from './config/logger';
 import app from './config/express';
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 createConnection()
   .then(() => {

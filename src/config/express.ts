@@ -19,6 +19,9 @@ app.use(authenticate);
 
 // Router
 app.use(application.url.base, indexRoute);
+app.get("/", (req, res) => {
+    res.send(true);
+});
 
 // Joi Error Handler
 app.use(joiErrorHandler);

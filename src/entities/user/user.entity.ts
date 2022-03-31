@@ -1,5 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Address } from '../address/address.entity';
 import { DateTimeEntity } from '../base/dateTimeEntity';
+import { Order } from '../order/order.entity';
 import { ProductReview } from '../product/productReview.entity';
 
 @Entity('user_auth', { orderBy: {  id: 'ASC' } })
@@ -28,4 +30,16 @@ export class User extends DateTimeEntity {
 
   @OneToMany(type => ProductReview, productReview => productReview.user)
   productReviews: ProductReview[];
+
+  @OneToMany(
+    (type) => Order,
+    (userOrder) => userOrder.user
+  )
+  orders: Order[];
+
+  @OneToMany(
+    (type) => Address,
+    (userAddress) => userAddress.user
+  )
+  addresses: Address[];
 }

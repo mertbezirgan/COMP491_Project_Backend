@@ -20,4 +20,9 @@ export default {
       images: Joi.array().items(Joi.string()),
     },
   },
+  get: {
+    [Segments.BODY]: {
+      
+    }
+  }
 };

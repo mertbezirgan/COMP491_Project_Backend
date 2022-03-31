@@ -1,4 +1,5 @@
-import productSchema from "../constants/schema/product.schema";
+import { getRepository } from 'typeorm';
+import { Product } from "../entities/product/product.entity";
 
 const create = async (body: any) => {
   try {
@@ -8,6 +9,16 @@ const create = async (body: any) => {
   }
 }
 
+const getProductById = async (id: number) => {
+  try {
+    return await getRepository(Product).findOne({ id });
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+}
+
 export default {
   create,
+  getProductById
 }

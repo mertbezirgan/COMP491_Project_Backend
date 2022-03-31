@@ -21,7 +21,7 @@ export class Product extends DateTimeEntity {
   @Column()
   bundle_price: number;
 
-  @Column()
+  @Column({ default: false })
   once_sold: boolean;
 
   @Column()

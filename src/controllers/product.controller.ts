@@ -27,7 +27,7 @@ const get: IController = async (req, res) => {
   let product = await productService.getProductById(id);
   if (!product) return apiResponse.error(res, httpStatusCodes.NOT_FOUND);
 
-  
+  return apiResponse.result(res, product, httpStatusCodes.OK);
 }
 
 export default {

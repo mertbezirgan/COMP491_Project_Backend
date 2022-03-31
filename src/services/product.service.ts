@@ -60,14 +60,19 @@ const create = async (input: CreateProductInput) => {
 
 const getProductById = async (id: number) => {
   try {
-    return await getRepository(Product).findOne({ id });
+    return await getRepository(Product).findOne({ id }, { relations: [
+      'token',
+      'productImages',
+      'stockKeepingUnits',
+      'productReviews'
+    ] });
   } catch (e) {
     console.log(e);
     return null;
   }
-}
+};
 
 export default {
   create,
-  getProductById
-}
+  getProductById,
+};

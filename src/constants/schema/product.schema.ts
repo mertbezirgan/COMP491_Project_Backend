@@ -1,5 +1,5 @@
 import { Joi, Segments } from "celebrate";
-import { size } from "../../entities/stockKeepingUnit/stockKeepingUnit.entity";
+import { size } from "../enums";
 
 export default {
   create: {

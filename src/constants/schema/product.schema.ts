@@ -27,4 +27,9 @@ export default {
       ),
     },
   },
+  get: {
+    [Segments.BODY]: {
+      
+    }
+  }
 };

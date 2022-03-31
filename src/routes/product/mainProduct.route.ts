@@ -10,5 +10,10 @@ router.post(
   celebrate(productSchema.create),
   productController.create,
 );
+router.get(
+  '/:id',
+  celebrate(productSchema.get),
+  productController.get
+);
 
 export default router

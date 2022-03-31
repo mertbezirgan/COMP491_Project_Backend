@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { DateTimeEntity } from '../base/dateTimeEntity';
+import { ProductReview } from '../product/product.entity';
 
 @Entity('user_auth', { orderBy: {  id: 'ASC' } })
 export class User extends DateTimeEntity {
@@ -24,4 +25,7 @@ export class User extends DateTimeEntity {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @OneToMany(type => ProductReview, productReview => productReview.user)
+  productReviews: ProductReview[];
 }

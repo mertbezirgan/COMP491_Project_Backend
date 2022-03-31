@@ -39,7 +39,8 @@ export class Product extends DateTimeEntity {
   @Column()
   token_id: number;
 
-  @OneToOne((type) => Token, (token) => token.product)
+  @OneToOne((type) => Token)
+  @JoinColumn()
   token: Token;
 
   @OneToMany((type) => ProductImage, (productImage) => productImage.product)

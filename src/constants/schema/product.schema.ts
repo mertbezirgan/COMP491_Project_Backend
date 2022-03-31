@@ -13,11 +13,18 @@ export default {
         token_address: Joi.string(),
         image_url: Joi.string(),
       }),
-      skus: Joi.array().items(Joi.object({
-        size: Joi.string(), //TODO add enum validation
-        stock: Joi.number(),
-      })),
-      images: Joi.array().items(Joi.string()),
+      skus: Joi.array().items(
+        Joi.object({
+          size: Joi.string(), //TODO add enum validation
+          stock: Joi.number(),
+        })
+      ),
+      images: Joi.array().items(
+        Joi.object({
+          url: Joi.string(),
+          altText: Joi.string(),
+        })
+      ),
     },
   },
   get: {

@@ -17,6 +17,9 @@ export class ProductImage extends DateTimeEntity {
   image_url: string;
 
   @Column()
+  alt_text: string;
+
+  @Column()
   product_id: number;
 
   @ManyToOne((type) => Product, (product) => product.productImages)

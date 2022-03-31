@@ -1,29 +1,35 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { DateTimeEntity } from "../base/dateTimeEntity";
 import { Product } from "../product/product.entity";
 import { size } from "../../constants/enums";
 
 @Entity("stock_keeping_unit", { orderBy: { id: "ASC" } })
 export class StockKeepingUnit extends DateTimeEntity {
-  @PrimaryGeneratedColumn({ type: 'bigint' })
+  @PrimaryGeneratedColumn({ type: "bigint" })
   id: number;
 
   @Column()
   sku: string;
 
-  @Column()
+  @Column({ default: true })
   is_available: boolean;
 
   @Column({ default: 0 })
   stock: number;
 
-  @Column({type: 'enum', enum: size})
+  @Column({ type: "enum", enum: size })
   size: size;
 
   @Column()
   product_id: number;
 
-  @ManyToOne(type => Product, product => product.stockKeepingUnits)
+  @ManyToOne((type) => Product, (product) => product.stockKeepingUnits)
   @JoinColumn({ name: "product_id" })
   product: Product;
 }

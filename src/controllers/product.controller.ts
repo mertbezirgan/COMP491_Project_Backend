@@ -8,6 +8,18 @@ const create: IController = async (req, res) => {
   apiResponse.error(res, httpStatusCodes.BAD_REQUEST, "Not implemented");
 }
 
+const get: IController = async (req, res) => {
+  let sid = req.params.id;
+  if (!sid) return apiResponse.error(res, httpStatusCodes.BAD_REQUEST);
+  let id = +sid; // Cast to number
+
+  let product = await productService.getProductById(id);
+  if (!product) return apiResponse.error(res, httpStatusCodes.NOT_FOUND);
+
+  
+}
+
 export default {
-  create
+  create,
+  get
 }

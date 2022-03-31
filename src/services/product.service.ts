@@ -5,13 +5,18 @@ import { ProductImage } from "../entities/product/productImage.entity";
 import { StockKeepingUnit } from "../entities/stockKeepingUnit/stockKeepingUnit.entity";
 import { Token } from "../entities/token/token.entity";
 import { CreateProductInput } from "../types/createProduct/CreateProduct.input";
+import { CreateProductOutput } from "../types/createProduct/createProduct.output";
+import { ListProductsInput } from "../types/listProduct/ListProduct.input";
+import { ListProductsOutput } from "../types/listProduct/ListProduct.output";
 
-const create = async (input: CreateProductInput) => {
+const create = async (
+  input: CreateProductInput
+): Promise<CreateProductOutput> => {
   try {
-    const productRepository = await getRepository(Product);
-    const productImageRepository = await getRepository(ProductImage);
-    const stockKeepingUnitRepository = await getRepository(StockKeepingUnit);
-    const tokenRepository = await getRepository(Token);
+    const productRepository = getRepository(Product);
+    const productImageRepository = getRepository(ProductImage);
+    const stockKeepingUnitRepository = getRepository(StockKeepingUnit);
+    const tokenRepository = getRepository(Token);
     //create product
     const product = new Product();
     product.name = input.name;
@@ -49,23 +54,74 @@ const create = async (input: CreateProductInput) => {
       let savedImage = await productImageRepository.save(newImage);
       images.push(savedImage);
     });
-    console.log(savedProduct);
-    console.log(savedToken);
-    console.log(skus);
-    console.log(images);
+
+    return {
+      success: true,
+      product: savedProduct,
+    };
   } catch (error) {
-    console.log(error);
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+};
+
+const list = async (input: ListProductsInput): Promise<ListProductsOutput> => {
+  try {
+    //TODO add nft ownership filter, product type check
+    //TODO calculate averate points for each product
+    const productRepository = getRepository(Product);
+    let query = productRepository.createQueryBuilder("product");
+    //left join token and productImages
+    query = query.leftJoinAndSelect("product.token", "token");
+    query = query.leftJoinAndSelect("product.productImages", "productImages");
+    if (input.minPrice) {
+      query = query.where("product.price >= :minPrice", {
+        minPrice: input.minPrice,
+      });
+    }
+    if (input.maxPrice) {
+      query = query.where("product.price <= :maxPrice", {
+        maxPrice: input.maxPrice,
+      });
+    }
+    if (input.sortBy) {
+      query = query.orderBy(input.sortBy, "ASC");
+    }
+    if (input.notPurchased) {
+      query = query.andWhere("product.once_sold = :once_sold", {
+        once_sold: !input.notPurchased,
+      });
+    }
+    query = query.skip(input.offset);
+    query = query.take(input.limit);
+    let products = await query.getMany();
+    return {
+      success: true,
+      products: products,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error.message,
+    };
   }
 };
 
 const getProductById = async (id: number) => {
   try {
-    return await getRepository(Product).findOne({ id }, { relations: [
-      'token',
-      'productImages',
-      'stockKeepingUnits',
-      'productReviews'
-    ] });
+    return await getRepository(Product).findOne(
+      { id },
+      {
+        relations: [
+          "token",
+          "productImages",
+          "stockKeepingUnits",
+          "productReviews",
+        ],
+      }
+    );
   } catch (e) {
     console.log(e);
     return null;
@@ -75,4 +131,5 @@ const getProductById = async (id: number) => {
 export default {
   create,
   getProductById,
+  list,
 };

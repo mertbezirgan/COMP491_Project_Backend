@@ -6,7 +6,7 @@ module.exports = {
   database: process.env.DB_NAME || 'test_db',
   charset: 'utf8',
   driver: 'mysql',
-  synchronize: true,
+  synchronize: false,
   entities:[
     '**/**.entity.ts'
     // '**/**.entity.js'

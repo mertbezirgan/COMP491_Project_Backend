@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { DateTimeEntity } from '../base/dateTimeEntity';
-import { ProductReview } from '../product/product.entity';
+import { ProductReview } from '../product/productReview.entity';
 
 @Entity('user_auth', { orderBy: {  id: 'ASC' } })
 export class User extends DateTimeEntity {

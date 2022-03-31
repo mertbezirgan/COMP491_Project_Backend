@@ -1,17 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { DateTimeEntity } from "../base/dateTimeEntity";
 import { Product } from "../product/product.entity";
-
-export enum size {
-  XXS = "XXS",
-  XS = "XS",
-  S = "S",
-  M = "M",
-  L = "L",
-  XL = "XL",
-  XXL = "XXL",
-  XXXL = "XXXL"
-}
+import { size } from "../../constants/enums";
 
 @Entity("stock_keeping_unit", { orderBy: { id: "ASC" } })
 export class StockKeepingUnit extends DateTimeEntity {

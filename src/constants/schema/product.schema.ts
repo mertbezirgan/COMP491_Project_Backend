@@ -1,5 +1,4 @@
 import { Joi, Segments } from "celebrate";
-import { size } from "../enums";
 
 export default {
   create: {

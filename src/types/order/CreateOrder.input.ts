@@ -5,5 +5,5 @@ export interface CreateOrderInput {
   status: number;
   sku_id: number;
   user_id: number;
-  address: string;
+  address_id: number;
 }

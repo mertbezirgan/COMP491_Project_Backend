@@ -58,7 +58,7 @@ const list = async (user: User): Promise<ListOrderOutput> => {
       where: {
         user
       },
-      relations: ["stockKeepingUnit", "address"]
+      relations: ["stockKeepingUnit", "stockKeepingUnit.product", "stockKeepingUnit.product.productImages", "address"]
     });
     res.orders = orders;
     

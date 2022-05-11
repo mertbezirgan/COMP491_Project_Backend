@@ -11,9 +11,21 @@ var cors = require("cors");
 
 const app = express();
 
-app.use(
-  cors({credentials: true, origin: 'http://localhost:3002'})
-);
+var whitelist = ["http://localhost:3002", "http://localhost:3000"];
+var corsOptions = {
+  credentials: true,
+  origin: function (
+    origin: any,
+    callback: (arg0: Error, arg1: boolean) => void
+  ) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"), false);
+    }
+  },
+};
+app.use(cors(corsOptions));
 
 require("dotenv").config();
 app.use(bodyParser.json());

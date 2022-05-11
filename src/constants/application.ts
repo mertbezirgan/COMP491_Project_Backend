@@ -13,7 +13,6 @@ export default {
   authorizationIgnorePath: [
     `${base}/user/auth/login`,
     `${base}/user/auth/register`,
-    "/",
     `${base}/product`,
     `${base}/product/list`,
   ],

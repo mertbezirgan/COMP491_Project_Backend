@@ -5,6 +5,7 @@ import { getRepository } from "typeorm";
 import { StockKeepingUnit } from "../entities/stockKeepingUnit/stockKeepingUnit.entity";
 import { orderStatus } from "../constants/enums";
 import { User } from "../entities/user/user.entity";
+import { ListOrderOutput } from "order/ListOrder.output";
 
 const create = async (input: CreateOrderInput): Promise<CreateOrderOutput> => {
   const stockKeepingUnitRepository = getRepository(StockKeepingUnit);
@@ -45,6 +46,31 @@ const create = async (input: CreateOrderInput): Promise<CreateOrderOutput> => {
   }
 };
 
+const list = async (user: User): Promise<ListOrderOutput> => {
+  const orderRepository = getRepository(Order);
+  
+  let res = {
+    success: true,
+    orders: []
+  } as ListOrderOutput;
+  try {
+    let orders = await orderRepository.find({
+      where: {
+        user
+      },
+      relations: ["stockKeepingUnit", "address"]
+    });
+    res.orders = orders;
+    
+    return res;
+  } catch (error) {
+    res.success = false;
+    res.error = error;
+    return res;    
+  }
+};
+
 export default {
   create,
+  list
 };

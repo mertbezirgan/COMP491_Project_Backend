@@ -6,6 +6,7 @@ import apiResponse from '../utilities/apiResponse';
 import { generateCookie } from '../utilities/encryptionUtils';
 import constants from '../constants';
 import locale from '../constants/locale';
+import orderService from "../services/order.service";
 
 const login: IController = async (req, res) => {
   const user = await userService.loginUser(
@@ -52,6 +53,11 @@ const register: IController = async (req, res) => {
 
 const self: IController = async (req, res) => {
   const cookie = await generateUserCookie(req.user.id);
+
+  // Get users order for profile screen
+  const orders = await orderService.list(req.user);
+  req.user.orders = orders.orders;
+
   apiResponse.result(res, req.user, httpStatusCodes.OK, cookie);
 };
 

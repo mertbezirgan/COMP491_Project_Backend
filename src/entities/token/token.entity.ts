@@ -12,4 +12,7 @@ export class Token extends DateTimeEntity {
 
   @Column()
   image_url: string;
+  
+  @Column()
+  mint_address: string;
 }

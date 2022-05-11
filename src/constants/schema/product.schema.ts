@@ -10,6 +10,7 @@ export default {
       bundle_price: Joi.number().required(),
       token: Joi.object({
         token_address: Joi.string().required(),
+        mint_address: Joi.string().required(),
         image_url: Joi.string().required(),
       }),
       skus: Joi.array().items(

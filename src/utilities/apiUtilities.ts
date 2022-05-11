@@ -24,6 +24,7 @@ const extractCookieFromRequest = (req: Request, key: string) => {
   if (req.headers.cookie) {
     const results = req.headers.cookie.split(';');
     const filtered = results.filter((result: string) => {
+      result = result.trim();
       return result.startsWith(`${key}=`);
     });
     if (filtered.length > 0) {

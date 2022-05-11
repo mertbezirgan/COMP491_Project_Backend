@@ -10,7 +10,10 @@ import * as errorHandler from "../middlewares/apiErrorHandler";
 var cors = require("cors");
 
 const app = express();
-app.use(cors());
+
+app.use(
+  cors({credentials: true, origin: 'http://localhost:3002'})
+);
 
 require("dotenv").config();
 app.use(bodyParser.json());

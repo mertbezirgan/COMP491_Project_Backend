@@ -18,16 +18,19 @@ const extractQueryForRequest = (req: Request, query: string) => {
 };
 
 const extractCookieFromRequest = (req: Request, key: string) => {
+  console.log('inside cookie extract');
   if (req.headers.authorization) {
     return req.headers.authorization;
   }
   if (req.headers.cookie) {
+    console.log('found cookie')
     const results = req.headers.cookie.split(';');
     const filtered = results.filter((result: string) => {
       result = result.trim();
       return result.startsWith(`${key}=`);
     });
     if (filtered.length > 0) {
+      console.log('returning cookie value');
       return filtered[0].split('=')[1];
     }
   }

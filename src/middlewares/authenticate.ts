@@ -23,15 +23,19 @@ export default async (
   res: express.Response,
   next: express.NextFunction,
 ) => {
+  console.log('inside auth')
   if (
     application.authorizationIgnorePath.indexOf(
       `${req.originalUrl}`,
     ) === -1
   ) {
+    console.log('non ignored path')
     const authorizationHeader = extractCookieFromRequest(
       req,
       Constants.Cookie.COOKIE_USER,
     );
+    console.log('returned cookie: ');
+    console.log(authorizationHeader);
     if (authorizationHeader) {
       const decoded = await verifyCookie(authorizationHeader);
       if (decoded) {

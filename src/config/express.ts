@@ -11,22 +11,7 @@ var cors = require("cors");
 
 const app = express();
 
-var whitelist = ["http://localhost:3002", "http://localhost:3000", "https://628fffb78bcb2b1341855292--isnt-ceyhuncfc9-awesome.netlify.app"];
-var corsOptions = {
-  credentials: true,
-  origin: function (
-    origin: any,
-    callback: (arg0: Error, arg1: boolean) => void
-  ) {
-    console.log(origin);
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"), false);
-    }
-  },
-};
-app.use(cors(corsOptions));
+app.use(cors());
 
 require("dotenv").config();
 app.use(bodyParser.json());

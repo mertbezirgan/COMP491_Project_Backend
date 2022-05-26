@@ -19,8 +19,9 @@ const extractQueryForRequest = (req: Request, query: string) => {
 
 const extractCookieFromRequest = (req: Request, key: string) => {
   console.log('inside cookie extract');
+  console.log()
   if (req.headers.authorization) {
-    return req.headers.authorization;
+    return req.headers.authorization.replace("Bearer ", "");
   }
   if (req.headers.cookie) {
     console.log('found cookie')

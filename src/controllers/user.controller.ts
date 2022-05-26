@@ -1,26 +1,23 @@
-import httpStatusCodes from 'http-status-codes';
+import httpStatusCodes from "http-status-codes";
 
-import userService from '../services/user.service';
-import IController from '../types/IController';
-import apiResponse from '../utilities/apiResponse';
-import { generateCookie } from '../utilities/encryptionUtils';
-import constants from '../constants';
-import locale from '../constants/locale';
+import userService from "../services/user.service";
+import IController from "../types/IController";
+import apiResponse from "../utilities/apiResponse";
+import { generateCookie } from "../utilities/encryptionUtils";
+import constants from "../constants";
+import locale from "../constants/locale";
 import orderService from "../services/order.service";
 
 const login: IController = async (req, res) => {
-  const user = await userService.loginUser(
-    req.body.email,
-    req.body.password,
-  );
+  const user = await userService.loginUser(req.body.email, req.body.password);
   if (user) {
     const cookie = await generateUserCookie(user.id);
-    apiResponse.result(res, user, httpStatusCodes.OK, cookie);
+    apiResponse.result(res, { user, token: cookie.value }, httpStatusCodes.OK);
   } else {
     apiResponse.error(
       res,
       httpStatusCodes.BAD_REQUEST,
-      locale.INVALID_CREDENTIALS,
+      locale.INVALID_CREDENTIALS
     );
   }
 };
@@ -31,34 +28,36 @@ const register: IController = async (req, res) => {
     user = await userService.createUser(
       req.body.email,
       req.body.password,
-      req.body.name,
+      req.body.name
     );
   } catch (e) {
     if (e.code === constants.ErrorCodes.DUPLICATE_ENTRY) {
       apiResponse.error(
         res,
         httpStatusCodes.BAD_REQUEST,
-        locale.EMAIL_ALREADY_EXISTS,
+        locale.EMAIL_ALREADY_EXISTS
       );
       return;
     }
   }
   if (user) {
     const cookie = await generateUserCookie(user.id);
-    apiResponse.result(res, user, httpStatusCodes.CREATED, cookie);
+    apiResponse.result(
+      res,
+      { user, token: cookie.value },
+      httpStatusCodes.CREATED
+    );
   } else {
     apiResponse.error(res, httpStatusCodes.BAD_REQUEST);
   }
 };
 
 const self: IController = async (req, res) => {
-  const cookie = await generateUserCookie(req.user.id);
-
   // Get users order for profile screen
   const orders = await orderService.list(req.user);
   req.user.orders = orders.orders;
 
-  apiResponse.result(res, req.user, httpStatusCodes.OK, cookie);
+  apiResponse.result(res, req.user, httpStatusCodes.OK);
 };
 
 const generateUserCookie = async (userId: number) => {
@@ -66,7 +65,7 @@ const generateUserCookie = async (userId: number) => {
     key: constants.Cookie.COOKIE_USER,
     value: await generateCookie(
       constants.Cookie.KEY_USER_ID,
-      userId.toString(),
+      userId.toString()
     ),
   };
 };

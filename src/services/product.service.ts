@@ -1,11 +1,11 @@
+import { CreateProductInput } from "createProduct/CreateProduct.input";
+import { CreateProductOutput } from "createProduct/CreateProduct.output";
 import { getRepository } from "typeorm";
 import { size } from "../constants/enums";
 import { Product } from "../entities/product/product.entity";
 import { ProductImage } from "../entities/product/productImage.entity";
 import { StockKeepingUnit } from "../entities/stockKeepingUnit/stockKeepingUnit.entity";
 import { Token } from "../entities/token/token.entity";
-import { CreateProductInput } from "../types/createProduct/CreateProduct.input";
-import { CreateProductOutput } from "../types/createProduct/createProduct.output";
 import { ListProductsInput } from "../types/listProduct/ListProduct.input";
 import { ListProductsOutput } from "../types/listProduct/ListProduct.output";
 

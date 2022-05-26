@@ -11,7 +11,7 @@ var cors = require("cors");
 
 const app = express();
 
-var whitelist = ["http://localhost:3002", "http://localhost:3000"];
+var whitelist = ["http://localhost:3002", "http://localhost:3000", "https://628fffb78bcb2b1341855292--isnt-ceyhuncfc9-awesome.netlify.app"];
 var corsOptions = {
   credentials: true,
   origin: function (

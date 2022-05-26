@@ -15,5 +15,8 @@ export default {
     `${base}/user/auth/register`,
     `${base}/product`,
     `${base}/product/list`,
+    `${base}/order`,
+    `${base}/address`,
+
   ],
 };
